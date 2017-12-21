@@ -1,0 +1,58 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Speedray Authentication API
+  license:
+    name: LGPL-3
+host: 192.168.1.23:8080
+basePath: /o/rest/speedray/api/v1
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /security/authenticate:
+      post:
+        description: Signin and return token
+        operationId: authenticate
+        parameters:
+          - in: body
+            description: Authentication payload
+            name: auth
+            required: true
+            schema:
+              $ref: '#/definitions/AuthenticationRequest'
+        responses:
+          200:
+            description: Successful response
+            schema:
+              $ref: '#/definitions/AuthenticationResponse'
+definitions:
+  AuthenticationRequest:
+    description: Request payload for Authentication call
+    type: object
+    required:
+      - type
+      - id
+      - password
+    properties:
+      type:
+        type: string
+        enum: ["SCREEN", "EMAIL", "ID"]
+      id:
+        type: string
+        format: id
+      password:
+        type: string
+  AuthenticationResponse:
+    description: Response payload for Authentication call
+    type: object
+    properties:
+      responseStatus:
+        type: string
+        enum: ["SUCCESS", "SUCCESS_CHANGE_PASSWORD_REQUIRED", "SYSTEM_UNAVAILABLE", "INTERNAL_ERROR", "INVALID_CREDENTIALS"]
+      generatedToken:
+        type: string

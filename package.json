@@ -1,0 +1,32 @@
+{
+  "name": "@speedray/typescript-fetch-api",
+  "version": "1.0.1",
+  "license": "Apache-2.0",
+  "main": "./dist/api.js",
+  "browser": "./dist/api.js",
+  "typings": "./dist/api.d.ts",
+  "dependencies": {
+    "core-js": "^2.4.0",
+    "isomorphic-fetch": "^2.2.1"
+  },
+  "scripts": {
+    "prepublish": "npm run codegen && typings install && tsc",
+    "codegen": "node node_modules/@speedray/codegen/index.js"
+  },
+  "devDependencies": {
+    "@speedray/codegen": "^1.0.2",
+    "typescript": "^1.8.10",
+    "typings": "^1.0.4"
+  },
+  "speedray": {
+    "outputDir": "openapi",
+    "produceModels": true,
+    "produceApis": true,
+    "services": [
+      {
+        "definition": "services.yaml",
+        "method": "typescript-fetch"
+      }
+    ]
+  }
+}
