@@ -1,4 +1,4 @@
-wwwroot/*.js
+openapi-typescript-fetch-api
 node_modules
 typings
 dist

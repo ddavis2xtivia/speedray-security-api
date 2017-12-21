@@ -19,7 +19,7 @@
     "typings": "^1.0.4"
   },
   "speedray": {
-    "outputDir": "openapi",
+    "outputDir": "openapi-typescipt-fetch-api",
     "produceModels": true,
     "produceApis": true,
     "services": [
