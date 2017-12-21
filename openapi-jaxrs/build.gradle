@@ -1,0 +1,114 @@
+repositories {
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+def packageJson = new groovy.json.JsonSlurper().parseText(file('../package.json').text)
+def jackson_version = '2.7.4'
+version = packageJson.version
+group = 'com.xtivia.speedray'
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['openapi/src/gen/java']
+        }
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+dependencies {
+    compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:'+jackson_version,
+            'javax.servlet:servlet-api:2.5',
+            'javax.ws.rs:javax.ws.rs-api:2.0.1',
+            'io.swagger:swagger-annotations:1.5.9'
+
+    testCompile 'org.testng:testng:6.3.1', 
+    			'org.easytesting:fest-assert:1.4', 
+    			'org.mockito:mockito-all:1.8.4', 
+            	'javax.servlet:servlet-api:2.5',
+            	'javax.portlet:portlet-api:2.0',
+            	'org.powermock:powermock-api-mockito:1.6.6',
+            	'org.powermock:powermock-module-junit4:1.6.6',
+	            'javax.ws.rs:javax.ws.rs-api:2.0.1',
+	            'io.swagger:swagger-annotations:1.5.9',
+	            'com.xtivia.tools:sgdxp:1.0.0',
+	            'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:'+jackson_version
+}
+
+test {
+    useTestNG {
+        preserveOrder true
+    }
+    classpath = classpath.plus(files(project.sourceSets.main.compileClasspath))
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      pom.project {
+        name group+':'+name
+        packaging 'jar'
+        // optionally artifactId can be defined here 
+        description 'OpenAPI API and Model objects for JAXRS implementations of the Speedray DXP Authentication services.'
+        url 'https://github.com/ddavis2xtivia/speedray-security-api'
+
+        scm {
+          connection 'scm:git:https://github.com/ddavis2xtivia/speedray-security-api.git'
+          developerConnection 'scm:git:ssh://github.com/ddavis2xtivia/speedray-security-api.git'
+          url 'https://github.com/ddavis2xtivia/speedray-security-api/master'
+        }
+
+        licenses {
+          license {
+            name 'The Apache License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+
+        developers {
+          developer {
+            id 'ddavis'
+            name 'Donald Lamar Davis II'
+            email 'ddavis@xtivia.com'
+          }
+        }
+      }
+    }
+  }
+}
+

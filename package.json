@@ -19,13 +19,23 @@
     "typings": "^1.0.4"
   },
   "speedray": {
-    "outputDir": "openapi-typescipt-fetch-api",
-    "produceModels": true,
-    "produceApis": true,
     "services": [
       {
+        "outputDir": "openapi-typescipt-fetch-api",
+        "produceModels": true,
+        "produceApis": true,
+        "produceSupportingFiles": true,
         "definition": "services.yaml",
         "method": "typescript-fetch"
+      },
+      {
+        "outputDir": "openapi-jaxrs/openapi",
+        "definition": "services.yaml",
+        "method": "jaxrs",
+        "invokerPackage": "com.xtivia.speedray.authentication.jaxrs.api",
+        "modelPackage": "com.xtivia.speedray.authentication.jaxrs.model",
+        "apiPackage": "com.xtivia.speedray.authentication.jaxrs.api",
+        "dateLibrary": "java8"
       }
     ]
   }
