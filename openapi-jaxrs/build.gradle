@@ -42,8 +42,9 @@ signing {
 }
 
 dependencies {
-    compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:'+jackson_version,
-            'javax.servlet:servlet-api:2.5',
+    compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:'+jackson_version
+
+    compileOnly 'javax.servlet:servlet-api:2.5',
             'javax.ws.rs:javax.ws.rs-api:2.0.1',
             'io.swagger:swagger-annotations:1.5.9'
 
@@ -53,11 +54,7 @@ dependencies {
             	'javax.servlet:servlet-api:2.5',
             	'javax.portlet:portlet-api:2.0',
             	'org.powermock:powermock-api-mockito:1.6.6',
-            	'org.powermock:powermock-module-junit4:1.6.6',
-	            'javax.ws.rs:javax.ws.rs-api:2.0.1',
-	            'io.swagger:swagger-annotations:1.5.9',
-	            'com.xtivia.tools:sgdxp:1.0.0',
-	            'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:'+jackson_version
+            	'org.powermock:powermock-module-junit4:1.6.6'
 }
 
 test {
