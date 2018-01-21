@@ -11,6 +11,7 @@ apply plugin: 'signing'
 
 def packageJson = new groovy.json.JsonSlurper().parseText(file('../package.json').text)
 def jackson_version = '2.7.4'
+
 version = packageJson.version
 group = 'com.xtivia.speedray'
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -92,8 +93,8 @@ uploadArchives {
 
         licenses {
           license {
-            name 'The Apache License, Version 2.0'
-            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            name 'GNU Lesser General Public License, Version 3'
+            url 'https://www.gnu.org/licenses/lgpl-3.0.en.html'
           }
         }
 

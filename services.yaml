@@ -30,16 +30,6 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/AuthenticationResponse'
-  /content/asset:
-    post:
-      description: Retrieve asset(s)
-      operationId: asset
-      parameters:
-        - in: body
-          description: Asset Query payload
-          name: assetQuery
-          schema:
-            $ref: '#/definitions/AssetQuery'
 definitions:
   AuthenticationRequest:
     description: Request payload for Authentication call
@@ -66,13 +56,3 @@ definitions:
         enum: ["SUCCESS", "SUCCESS_CHANGE_PASSWORD_REQUIRED", "SYSTEM_UNAVAILABLE", "INTERNAL_ERROR", "INVALID_CREDENTIALS"]
       generatedToken:
         type: string
-  AssetQuery:
-    description: AssetQuery payload for retrieving assets via search
-    type: object
-    properties:
-      groupId:
-        type: long
-      categoryIds:
-        type: array
-        items:
-          type: string
